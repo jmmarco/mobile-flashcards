@@ -6,6 +6,9 @@ import DeckListView from './components/DeckListView'
 import { TabNavigator } from 'react-navigation'
 import { mediumSeaGreen, white } from './utils/colors'
 import { Constants } from 'expo'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 
 function FlashCardStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -55,10 +58,12 @@ const Tabs = TabNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{flex: 1}}>
-        <FlashCardStatusBar backgroundColor={mediumSeaGreen} barStyle='light-content'/>
-        <Tabs/>
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={{flex: 1}}>
+          <FlashCardStatusBar backgroundColor={mediumSeaGreen} barStyle='light-content'/>
+          <Tabs/>
+        </View>
+      </Provider>
     )
   }
 }
