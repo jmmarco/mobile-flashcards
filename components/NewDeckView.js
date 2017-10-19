@@ -1,17 +1,32 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import { getDeckInfo } from '../utils/helpers'
-import { addDeck } from '../utils/api'
+import { submitEntry, logger } from '../utils/api'
+import { connect } from 'react-redux'
+import { addEntry } from '../actions'
 
-export default class NewDeckView extends Component {
+class NewDeckView extends Component {
 
   state = {
     title: 'Deck Title',
     questions: []
   }
 
-  handlePress = () => {
-    alert(this.state.title)
+  submit = () => {
+    const key = this.state.title
+    const entry = this.state
+
+    // Add Redux or just use local state..
+    this.props.dispatch(addEntry({
+      [key]: entry
+    }))
+    this.setState(() => ({
+      title: 'Deck Title', questions: []
+    }))
+
+    // Navigate to home
+    submitEntry({ entry })
+    logger()
   }
 
   render() {
@@ -25,7 +40,7 @@ export default class NewDeckView extends Component {
           style={styles.input}
           onChangeText={(title) => this.setState({title})}
         />
-        <TouchableOpacity style={styles.btn} onPress={this.handlePress}>
+        <TouchableOpacity style={styles.btn} onPress={this.submit}>
           <Text style={{color: 'white'}}>SUBMIT</Text>
         </TouchableOpacity>
 
@@ -33,6 +48,12 @@ export default class NewDeckView extends Component {
     )
   }
 }
+
+function mapStateToProps (state) {
+  // Empty for now
+}
+
+export default connect()(NewDeckView)
 
 const styles = StyleSheet.create({
   container: {
