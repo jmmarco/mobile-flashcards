@@ -1,8 +1,8 @@
 import { AsyncStorage } from 'react-native'
 
-const FLASHCARDS_STORAGE_KEY = '@MySuperStore:key'
+export const FLASHCARDS_STORAGE_KEY = '@MySuperStore:key'
 
-let initialFlashCards = {
+export const initialFlashCards = {
   React: {
     title: 'React',
     questions: [
@@ -67,12 +67,24 @@ export function saveDeckTitle() {
 }
 
 export function initStorage () {
-  return AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
+  AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
     AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, result) => {
       console.log(JSON.parse(result))
     })
   })
+  .then((response) => {
+    response = true
+    console.log("So far so good", response)
+    // If all goes well signal that we're good!
+    return response
+  })
+  .catch((error) => {
+    // Otherwise output error to the console and return false
+    console.log("Oops, something went wrong..", error)
+    return error
+  })
 }
+
 
 
 
