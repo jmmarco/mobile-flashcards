@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import { getDeckInfo } from '../utils/helpers'
-import { saveDeckTitle } from '../utils/api'
 import { connect } from 'react-redux'
+import { submitEntry, removeEntry } from '../utils/api'
 import { addEntry } from '../actions'
 
 class NewDeckView extends Component {
@@ -12,7 +12,10 @@ class NewDeckView extends Component {
     questions: []
   }
 
+
+
   submit = () => {
+    alert("Hey a button was pressed!")
     const key = this.state.title
     const entry = this.state
 
@@ -28,9 +31,10 @@ class NewDeckView extends Component {
     console.log("What is entry: ", entry)
     console.log(key, entry)
     // Save to 'DB'
-    saveDeckTitle({ key, entry })
+    // saveDeckTitle({ key, entry })
 
     // Navigate to home
+    submitEntry({key, entry})
   }
 
 
