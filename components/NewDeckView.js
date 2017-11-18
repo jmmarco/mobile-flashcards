@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import { getDeckInfo } from '../utils/helpers'
-import { submitEntry, logger } from '../utils/api'
+import { saveDeckTitle } from '../utils/api'
 import { connect } from 'react-redux'
 import { addEntry } from '../actions'
 
@@ -20,19 +20,28 @@ class NewDeckView extends Component {
     this.props.dispatch(addEntry({
       [key]: entry
     }))
+
     this.setState(() => ({
       title: 'Deck Title', questions: []
     }))
+    console.log("What is key: ", key)
+    console.log("What is entry: ", entry)
+    console.log(key, entry)
+    // Save to 'DB'
+    saveDeckTitle({ key, entry })
 
     // Navigate to home
-    submitEntry({ entry })
-    logger()
+  }
+
+
+  toHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({key: 'AddEntry'}))
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>What is the title of your new deck?</Text>
+        <Text style={{fontSize: 50, textAlign: 'center'}} >What is the title of your new deck?</Text>
         <TextInput
           placeholder={this.state.title}
           editable={true}

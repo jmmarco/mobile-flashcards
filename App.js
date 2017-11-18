@@ -57,8 +57,9 @@ const Tabs = TabNavigator({
 
 export default class App extends React.Component {
   render() {
+    var store = createStore(reducer)
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={store}>
         <View style={{flex: 1}}>
           <FlashCardStatusBar backgroundColor={mediumSeaGreen} barStyle='light-content'/>
           <Tabs/>
@@ -67,3 +68,24 @@ export default class App extends React.Component {
     )
   }
 }
+
+/*
+Noooo
+ReactDOM.render(
+ <Provider store={createStore(reducers)}>
+   <App/>
+ </Provider>,
+ document.getElementById('root')
+)
+
+
+Yessss
+var store = createStore(reducers);
+ReactDOM.render(
+ <Provider store={store}>
+   <App/>
+ </Provider>,
+ document.getElementById('root')
+)
+
+*/

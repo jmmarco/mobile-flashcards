@@ -9,6 +9,7 @@ export function recieveEntries (entries) {
 }
 
 export function addEntry (entry) {
+  console.log('entry from action is: ', entry)
   return {
     type: 'ADD_ENTRY',
     entry
