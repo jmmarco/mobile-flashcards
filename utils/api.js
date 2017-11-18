@@ -18,7 +18,10 @@ addCardToDeck: take in two arguments, title and card, and will add the card to t
 
 */
 
+
 export function submitEntry({ entry, key }) {
+  console.log("Fired API submitEntry")
+    console.log( {entry, key })
   return AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({
     [key]:entry,
   }))
@@ -31,5 +34,5 @@ export function removeEntry(key) {
     data[key] = undefined
     delete data[key]
     AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data))
-  )}
+  })
 }
