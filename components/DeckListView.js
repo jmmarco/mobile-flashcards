@@ -14,6 +14,11 @@ export default class DeckListView extends Component {
     }
   }
 
+
+  openDeck = () => {
+    alert("Heelloo")
+  }
+
   componentDidMount() {
     AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
       AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
@@ -49,7 +54,7 @@ export default class DeckListView extends Component {
         <View>
           {decks.map((entry) => {
             return (
-              <TouchableOpacity key={entry} style={styles.deck}>
+              <TouchableOpacity key={entry} style={styles.deck} onPress={this.openDeck}>
                 <Text style={styles.deckTitle}>{entry}</Text>
                 <Text>{decks.length} cards</Text>
               </TouchableOpacity>
@@ -68,7 +73,6 @@ export default class DeckListView extends Component {
         </View>
       )
     }
-
 
   }
 
