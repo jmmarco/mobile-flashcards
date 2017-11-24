@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons'
 import NewDeckView from './components/NewDeckView'
 import DeckListView from './components/DeckListView'
-import { TabNavigator } from 'react-navigation'
+import IndividualDeckView from './components/IndividualDeckView'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import { mediumSeaGreen, white } from './utils/colors'
 import { Constants } from 'expo'
 import { createStore } from 'redux'
@@ -55,6 +56,23 @@ const Tabs = TabNavigator({
   }
 })
 
+const MainNavigator = StackNavigator({
+
+  Home: {
+    screen: Tabs
+  },
+  Deck: {
+    screen: IndividualDeckView,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: mediumSeaGreen,
+      }
+    }
+  }
+})
+
+
 export default class App extends React.Component {
   render() {
     var store = createStore(reducer)
@@ -62,7 +80,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <View style={{flex: 1}}>
           <FlashCardStatusBar backgroundColor={mediumSeaGreen} barStyle='light-content'/>
-          <Tabs/>
+          <MainNavigator/>
         </View>
       </Provider>
     )
