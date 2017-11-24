@@ -69,7 +69,8 @@ export default class DeckListView extends Component {
                 onPress={() => this.props.navigation.navigate('Deck',
                   {
                     deckId: i,
-                    title: decks[key].title
+                    title: decks[key].title,
+                    questions: decks[key].questions
                   }
                 )}>
                 <Text style={styles.deckTitle}>{decks[key].title}</Text>
