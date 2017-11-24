@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { FLASHCARDS_STORAGE_KEY, initialFlashCards} from '../utils/_initialData'
 import { getDecks } from '../utils/api'
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import IndividualDeckView from './IndividualDeckView'
 import { AsyncStorage } from 'react-native'
+
+
 
 export default class DeckListView extends Component {
 
@@ -14,10 +17,6 @@ export default class DeckListView extends Component {
     }
   }
 
-
-  openDeck = () => {
-    alert("Heelloo")
-  }
 
   componentDidMount() {
     AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
@@ -42,25 +41,57 @@ export default class DeckListView extends Component {
 
   render() {
 
-    const decks = Object.keys(this.state.decks)
+    const { decks } = this.state
 
-    decks.map((entry) => {
-      console.log(entry)
+    console.log(this.state.decks)
+    //
+    // for (let i in this.state.decks) {
+    //   console.log(this.state.decks[i])
+    // }
+
+    Object.keys(this.state.decks).map((key) => {
+      console.log(typeof this.state.decks[key])
     })
 
-    if (this.state.firstLaunch && decks.length > 0) {
+
+    // decks.map((entry, i, array) => {
+    //   console.log(entry, i, array)
+    // })
+    console.log(decks)
+
+    if (this.state.firstLaunch && decks !== undefined) {
       return (
 
         <View>
-          {decks.map((entry) => {
+          {Object.keys(decks).map((key, i) => {
             return (
-              <TouchableOpacity key={entry} style={styles.deck} onPress={this.openDeck}>
-                <Text style={styles.deckTitle}>{entry}</Text>
-                <Text>{decks.length} cards</Text>
+              <TouchableOpacity style={styles.deck} key={i}
+                onPress={() => this.props.navigation.navigate('Deck',
+                  {
+                    deckId: i,
+                    title: decks[key].title
+                  }
+                )}>
+                <Text style={styles.deckTitle}>{decks[key].title}</Text>
+                <Text>{decks[key].questions.length} cards</Text>
+              </TouchableOpacity>
+            )
+          })}
+          {/* {decks.map((entry, i) => {
+            return (
+              <TouchableOpacity key={entry} style={styles.deck}
+            onPress={() => this.props.navigation.navigate('Deck',
+            {
+            deckId: i,
+            title: entry
+            }
+            )}>
+            <Text style={styles.deckTitle}>{entry}</Text>
+            <Text>{decks.length} cards</Text>
               </TouchableOpacity>
             )
 
-          })}
+          })} */}
 
         </View>
           )
