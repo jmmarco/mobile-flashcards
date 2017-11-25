@@ -31,5 +31,32 @@ export default StyleSheet.create({
     borderColor: 'black',
     borderStyle: 'solid',
     borderWidth: 2
+  },
+  btnIncorrect: {
+    padding: 15,
+    width: 200,
+    borderRadius: 5,
+    backgroundColor: 'orangered',
+    margin: 10,
+
+  },
+  btnCorrect: {
+    padding: 15,
+    width: 200,
+    borderRadius: 5,
+    backgroundColor: 'limegreen',
+    margin: 10,
+  },
+  question: {
+    fontSize: 32,
+  },
+  cardsLeft: {
+    flex: 1,
+    padding: 0,
+    margin: 0,
+    // flexDirection: 'row',
+    // alignSelf: 'flex-start',
+    // alignItems: 'flex-start',
+
   }
 })
