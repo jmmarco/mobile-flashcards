@@ -4,6 +4,7 @@ import { MaterialCommunityIcons, MaterialIcons, Ionicons, FontAwesome } from '@e
 import NewDeckView from './components/NewDeckView'
 import DeckListView from './components/DeckListView'
 import IndividualDeckView from './components/IndividualDeckView'
+import QuizView from './components/QuizView'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { mediumSeaGreen, white } from './utils/colors'
 import { Constants } from 'expo'
@@ -69,7 +70,16 @@ const MainNavigator = StackNavigator({
         backgroundColor: mediumSeaGreen,
       }
     }
-  }
+  },
+  Quiz: {
+    screen: QuizView,
+      navigationOptions: {
+        headerTintColor: white,
+        headerStyle: {
+          backgroundColor: mediumSeaGreen,
+        }
+      }
+    }
 })
 
 
