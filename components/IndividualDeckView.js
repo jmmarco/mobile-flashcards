@@ -5,21 +5,16 @@ import styles from '../utils/styles'
 export default class IndividualDeckView extends Component {
 
   static navigationOptions = ({ navigation }) => {
-    const { deckId, title } = navigation.state.params
+    const { deckId, title, questions } = navigation.state.params
 
     return {
-      title: title
+      title: title,
+      questions: questions
     }
 
   }
 
-  addCard = () => {
-    alert("Adding Card!")
-  }
 
-  startQuiz = () => {
-    alert("Starting Quiz!")
-  }
 
   render() {
     console.log(styles)
@@ -32,7 +27,13 @@ export default class IndividualDeckView extends Component {
           <Text style={{color: 'black', textAlign: 'center'}}>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnBlack} onPress={this.startQuiz}>
-          <Text style={{color: 'white', textAlign: 'center'}}>Start Quiz</Text>
+          <Text style={{color: 'white', textAlign: 'center'}} onPress={() => this.props.navigation.navigate('Quiz',
+            {
+              deckId: deckId,
+              title: 'Quiz',
+              questions: questions
+            }
+          )}>Start Quiz</Text>
         </TouchableOpacity>
       </View>
     )
