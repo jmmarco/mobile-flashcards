@@ -5,7 +5,6 @@ import NewDeckView from './components/NewDeckView'
 import DeckListView from './components/DeckListView'
 import IndividualDeckView from './components/IndividualDeckView'
 import QuizView from './components/QuizView'
-import Question from './components/Question'
 import Answer from './components/Answer'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { mediumSeaGreen, white } from './utils/colors'
@@ -59,19 +58,19 @@ const Tabs = TabNavigator({
   }
 })
 
-const QuizNavigator = StackNavigator({
-
-  Question: {
-    screen: Question,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  Answer: {
-    screen: Answer
-  }
-
-})
+// const QuizNavigator = StackNavigator({
+//
+//   Question: {
+//     screen: Question,
+//     navigationOptions: {
+//       header: null,
+//     },
+//   },
+//   Answer: {
+//     screen: Answer
+//   }
+//
+// })
 
 const MainNavigator = StackNavigator({
 
@@ -88,7 +87,7 @@ const MainNavigator = StackNavigator({
     }
   },
   Quiz: {
-    screen: QuizNavigator,
+    screen: QuizView,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
@@ -96,6 +95,15 @@ const MainNavigator = StackNavigator({
       }
     }
   },
+  Answer: {
+    screen: Answer,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: mediumSeaGreen,
+      }
+    }
+  }
 
 })
 

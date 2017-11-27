@@ -64,6 +64,13 @@ export default StyleSheet.create({
     fontSize: 18,
     letterSpacing: 0.2,
     color: 'firebrick',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  answerText: {
+    fontSize: 18,
+    letterSpacing: 0.2,
+    textAlign: 'center',
+    padding: 10,
   }
 })

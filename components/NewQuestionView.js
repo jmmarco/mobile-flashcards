@@ -5,7 +5,7 @@ export default class NewQuestionView extends Component {
 
   render() {
     return (
-      <Text>This is the NewQuestionView Component</Text>
+      <Text>This is where you add a new card to an existing deck</Text>
     )
   }
 

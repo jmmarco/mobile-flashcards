@@ -8,15 +8,18 @@ export default class Answer extends Component {
 
 
     return {
-      title: 'Answer goes here',
+      title: 'Answer',
     }
 
   }
 
   render() {
+
+    const answer = this.props.navigation.state.params
+
     return (
-      <View>
-        <Text>Answer to card goes here.</Text>
+      <View style={styles.container}>
+        <Text style={styles.answerText}>{answer}</Text>
       </View>
     )
   }
