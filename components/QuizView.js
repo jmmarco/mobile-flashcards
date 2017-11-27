@@ -1,53 +1,56 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text } from 'react-native'
+import { View, TouchableOpacity, Text, ScrollView } from 'react-native'
 import styles from '../utils/styles'
+import { StackNavigator } from 'react-navigation'
 
-export default class NewQuestionView extends Component {
+
+function Question({ question }){
+  return (
+    <View>
+      <Text> / {question.length}</Text>
+      <Text style={styles.question}>{question}</Text>
+      <Text style={styles.answer} onPress={() => navigation.navigate('Answer')}>Answer</Text>
+      <TouchableOpacity style={styles.btnCorrect} onPress={this.correct}>
+        <Text style={{color: 'white', textAlign: 'center'}}>Correct</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnIncorrect} onPress={this.inCorrect}>
+        <Text style={{color: 'white', textAlign: 'center'}}>Incorrect</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+export default class QuizView extends Component {
 
 
   static navigationOptions = ({ navigation }) => {
     const { title, questions } = navigation.state.params
 
     return {
-      title: title,
+      title: 'Quiz',
       questions: questions
     }
-
   }
 
-  correct = () => {
-    alert("Ok, you got that one.")
-  }
 
-  inCorrect = () => {
-    alert("Oops, you missed that one.")
-  }
 
   render() {
-    const { questions } = this.props.navigation.state.params
-    return (
+    const currentQuestionIndex = 0
+    const questions = this.props.navigation.state.params.questions
+    const questionsLength = this.props.navigation.state.params.questions.length
 
-      <View style={styles.container}>
+    const { navigation } = this.props
 
-        {questions.map((entry, i) => {
+      return (
 
-          return (
-            <View>
-              <Text> {i + 1} / {questions.length}</Text>
-              <Text style={styles.question} key={i}>{entry.question}</Text>
+        // <FlatList renderItem={({ question }) => <Text>{question}</Text>}/>
+        <ScrollView>
+          {questions.map(({ question }) =>  <Question question={question}/> )}
+        </ScrollView>
 
-              <TouchableOpacity style={styles.btnCorrect} onPress={this.correct}>
-                <Text style={{color: 'white', textAlign: 'center'}}>Correct</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.btnIncorrect} onPress={this.inCorrect}>
-                <Text style={{color: 'white', textAlign: 'center'}}>Incorrect</Text>
-              </TouchableOpacity>
-            </View>
-          )
-        })}
+      )
 
-      </View>
-    )
-  }
+
+  } // End of Render
 
 }

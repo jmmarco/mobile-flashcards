@@ -49,6 +49,7 @@ export default StyleSheet.create({
   },
   question: {
     fontSize: 32,
+    textAlign: 'center',
   },
   cardsLeft: {
     flex: 1,
@@ -57,6 +58,12 @@ export default StyleSheet.create({
     // flexDirection: 'row',
     // alignSelf: 'flex-start',
     // alignItems: 'flex-start',
-
+  },
+  answer: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    letterSpacing: 0.2,
+    color: 'firebrick',
+    textAlign: 'center'
   }
 })

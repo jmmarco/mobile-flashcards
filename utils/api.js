@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native'
-import { FLASHCARDS_STORAGE_KEY, initStorage } from './_initialData'
+import { FLASHCARDS_STORAGE_KEY, initStorage, initialFlashCards } from './_initialData'
 
 /*
 To manage your AsyncStorage database, you'll want to create four different helper methods.
@@ -11,12 +11,20 @@ addCardToDeck: take in two arguments, title and card, and will add the card to t
 
 */
 
-/* AsyncStorage has three main methods:
- -setItem
- - removeItem
- - getAll
+// I HAVE TO SET THE DECKS FIRST!!!!!!!!
 
-*/
+
+
+
+
+export function getDeck(id) {
+  AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
+    console.log(results)
+  })
+}
+
+
+
 
 
 export function submitEntry({ entry, key }) {
