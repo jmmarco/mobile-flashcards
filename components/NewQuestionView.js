@@ -35,8 +35,7 @@ export default class NewQuestionView extends Component {
 
 
   addCard = (title, card) => {
-    let udpatedData, currentData
-    console.log("fired")
+    let currentData
     const { question, answer } = this.state
     console.log(question, answer)
     const questions = { question, answer }
@@ -65,7 +64,6 @@ export default class NewQuestionView extends Component {
 
     // Navigate to home
     this.props.navigation.navigate('Home')
-
 
   }
 
