@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { FLASHCARDS_STORAGE_KEY, initialFlashCards} from '../utils/_initialData'
 import { getDecks } from '../utils/api'
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage } from 'react-native'
 import IndividualDeckView from './IndividualDeckView'
-import { AsyncStorage } from 'react-native'
 
 
 

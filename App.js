@@ -6,6 +6,7 @@ import DeckListView from './components/DeckListView'
 import IndividualDeckView from './components/IndividualDeckView'
 import QuizView from './components/QuizView'
 import Answer from './components/Answer'
+import NewQuestionView from './components/NewQuestionView'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { mediumSeaGreen, white } from './utils/colors'
 import { Constants } from 'expo'
@@ -97,6 +98,15 @@ const MainNavigator = StackNavigator({
   },
   Answer: {
     screen: Answer,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: mediumSeaGreen,
+      }
+    }
+  },
+  AddCard: {
+    screen: NewQuestionView,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {

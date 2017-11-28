@@ -25,13 +25,19 @@ export default class IndividualDeckView extends Component {
       <View style={styles.container}>
         <Text style={{fontSize: 50, textAlign: 'center'}} >{title}</Text>
         <Text style={{fontSize: 30, textAlign: 'center', marginBottom: 50}} >{questions.length} cards</Text>
-        <TouchableOpacity style={styles.btnWhite} onPress={this.addCard}>
+        <TouchableOpacity style={styles.btnWhite} onPress={() => this.props.navigation.navigate('AddCard',
+          {
+            deckId: deckId,
+            title: title,
+            questions: questions,
+          }
+        )}>
           <Text style={{color: 'black', textAlign: 'center'}}>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnBlack} onPress={() => this.props.navigation.navigate('Quiz',
           {
             deckId: deckId,
-            title: 'Quiz',
+            title: title,
             questions: questions
           }
         )}>
