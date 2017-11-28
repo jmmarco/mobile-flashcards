@@ -57,26 +57,15 @@ export default class NewQuestionView extends Component {
         currentData[title]['questions'].push(questions)
         console.log(currentData)
         AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
+        AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
+          console.log(JSON.parse(results))
+        })
       }
     })
-    // }, () => {
-    //   AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
-    // }, () => {
-    //   AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-    //     console.log("Fired")
-    //     console.log(results)
-    //   })
-    // })
 
-    // AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
-    //
-    // // console.log(updatedData)
-    // // let zaraza = JSON.stringify(udpatedData)
-    // // console.log(zaraza)
-    //
-    AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-      console.log(results)
-    })
+    // Navigate to home
+    this.props.navigation.navigate('Home')
+
 
   }
 
