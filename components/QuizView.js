@@ -76,7 +76,7 @@ export default class QuizView extends Component {
       return (
 
         <View style={styles.container}>
-          <Text>{index} / {this.state.questionsLength}</Text>
+          <Text>{index + 1} / {this.state.questionsLength}</Text>
           <Text style={styles.question}>{questions[index].question}</Text>
           <Text style={styles.answer} onPress={() => navigation.navigate('Answer', questions[index].answer)}>Answer</Text>
 
