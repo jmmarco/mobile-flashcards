@@ -3,6 +3,7 @@ import { FLASHCARDS_STORAGE_KEY, initialFlashCards} from '../utils/_initialData'
 import { getDecks } from '../utils/api'
 import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage } from 'react-native'
 import IndividualDeckView from './IndividualDeckView'
+import styles from '../utils/styles'
 
 
 
@@ -111,19 +112,3 @@ export default class DeckListView extends Component {
   }
 
 }
-
-const styles = StyleSheet.create({
-  deck: {
-    padding: 10,
-    margin: 10,
-    borderWidth: 2,
-    borderColor: '#d6d7da',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  deckTitle: {
-    fontSize: 18,
-    letterSpacing: 1,
-  }
-
-})

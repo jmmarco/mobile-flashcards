@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, AsyncStorage } from 'react-native'
 import { getDeckInfo } from '../utils/helpers'
-import { connect } from 'react-redux'
 import { submitEntry, removeEntry } from '../utils/api'
 import { addEntry } from '../actions'
 import { FLASHCARDS_STORAGE_KEY, initialFlashCards} from '../utils/_initialData'
+import styles from '../utils/styles'
 
 class NewDeckView extends Component {
 
@@ -42,11 +42,6 @@ class NewDeckView extends Component {
     this.props.navigation.navigate('Home')
   }
 
-
-  toHome = () => {
-    this.props.navigation.dispatch(NavigationActions.back({key: 'AddEntry'}))
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -67,30 +62,5 @@ class NewDeckView extends Component {
   }
 }
 
-function mapStateToProps (state) {
-  // Empty for now
-}
 
-export default connect()(NewDeckView)
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    padding: 5,
-    height: 40,
-    width: 300,
-    borderColor: 'gray',
-    borderWidth: 1,
-    color: 'black',
-    margin: 10,
-  },
-  btn: {
-    padding: 15,
-    borderRadius: 5,
-    backgroundColor: 'black',
-  }
-})
+export default NewDeckView

@@ -6,6 +6,18 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  deck: {
+    padding: 10,
+    margin: 10,
+    borderWidth: 2,
+    borderColor: '#d6d7da',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  deckTitle: {
+    fontSize: 18,
+    letterSpacing: 1,
+  },
   input: {
     padding: 5,
     height: 40,
@@ -14,6 +26,11 @@ export default StyleSheet.create({
     borderWidth: 1,
     color: 'black',
     margin: 10,
+  },
+  btn: {
+    padding: 15,
+    borderRadius: 5,
+    backgroundColor: 'black',
   },
   btnBlack: {
     padding: 15,
