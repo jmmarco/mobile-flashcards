@@ -73,7 +73,10 @@ export default class DeckListView extends Component {
                   }
                 )}>
                 <Text style={styles.deckTitle}>{decks[key].title}</Text>
-                <Text>{decks[key].questions.length} cards</Text>
+                {decks[key].questions.length > 0 ? (<Text>{decks[key].questions.length} cards</Text> )
+                : (
+                  <Text>0 cards</Text>
+                )}
               </TouchableOpacity>
             )
           })}

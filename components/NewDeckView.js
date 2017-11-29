@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, AsyncStorage } from 'react-native'
 import { getDeckInfo } from '../utils/helpers'
 import { connect } from 'react-redux'
 import { submitEntry, removeEntry } from '../utils/api'
 import { addEntry } from '../actions'
+import { FLASHCARDS_STORAGE_KEY, initialFlashCards} from '../utils/_initialData'
 
 class NewDeckView extends Component {
 
@@ -15,26 +16,30 @@ class NewDeckView extends Component {
 
 
   submit = () => {
-    alert("Hey a button was pressed!")
-    const key = this.state.title
-    const entry = this.state
+    // alert("Hey a button was pressed!")
+    // const key = this.state.title
+    // const entry = this.state
 
-    // Add Redux or just use local state..
-    this.props.dispatch(addEntry({
-      [key]: entry
-    }))
+    const { title, questions } = this.state
 
-    this.setState(() => ({
-      title: 'Deck Title', questions: []
-    }))
-    console.log("What is key: ", key)
-    console.log("What is entry: ", entry)
-    console.log(key, entry)
-    // Save to 'DB'
-    // saveDeckTitle({ key, entry })
+
+    // Save to "DB"
+    AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
+      if (results !== null) {
+        console.log('Data Found', results)
+        currentData = JSON.parse(results)
+        // currentData[key] = key
+        currentData[title] = { title, questions }
+        console.log(currentData)
+        AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
+        AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
+          console.log(JSON.parse(results))
+        })
+      }
+    })
 
     // Navigate to home
-    submitEntry({key, entry})
+    this.props.navigation.navigate('Home')
   }
 
 
