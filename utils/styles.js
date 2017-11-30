@@ -78,16 +78,20 @@ export default StyleSheet.create({
   },
   answer: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 20,
     letterSpacing: 0.2,
     color: 'firebrick',
     textAlign: 'center',
-    marginBottom: 20,
+    margin: 20,
   },
   answerText: {
     fontSize: 18,
     letterSpacing: 0.2,
     textAlign: 'center',
     padding: 10,
+  },
+  answered: {
+    padding: 15,
+    margin: 10,
   }
 })
