@@ -10,11 +10,9 @@ import NewQuestionView from './components/NewQuestionView'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { mediumSeaGreen, white } from './utils/colors'
 import { Constants } from 'expo'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import reducer from './reducers'
 
-function FlashCardStatusBar ({ backgroundColor, ...props }) {
+
+function FlashCardStatusBar({ backgroundColor, ...props }) {
   return (
     <View style={{backgroundColor, height: Constants.statusBarHeight }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
@@ -124,14 +122,12 @@ const MainNavigator = StackNavigator({
 
 export default class App extends React.Component {
   render() {
-    var store = createStore(reducer)
     return (
-      <Provider store={store}>
-        <View style={{flex: 1}}>
-          <FlashCardStatusBar backgroundColor={mediumSeaGreen} barStyle='light-content'/>
-          <MainNavigator/>
-        </View>
-      </Provider>
+
+      <View style={{flex: 1}}>
+        <FlashCardStatusBar backgroundColor={mediumSeaGreen} barStyle='light-content'/>
+        <MainNavigator/>
+      </View>
     )
   }
 }
