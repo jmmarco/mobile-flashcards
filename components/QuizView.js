@@ -2,24 +2,7 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, ScrollView, Button, AsyncStorage, Alert } from 'react-native'
 import styles from '../utils/styles'
 import { StackNavigator } from 'react-navigation'
-import { FLASHCARDS_STORAGE_KEY, initialFlashCards} from '../utils/_initialData'
-
-
-// function Question({ question }){
-//   return (
-//     <View>
-//       <Text> / {questions.length}</Text>
-//       <Text style={styles.question}>{question}</Text>
-//       <Text style={styles.answer} onPress={() => navigation.navigate('Answer')}>Answer</Text>
-//       <TouchableOpacity style={styles.btnCorrect} onPress={this.correct}>
-//         <Text style={{color: 'white', textAlign: 'center'}}>Correct</Text>
-//       </TouchableOpacity>
-//       <TouchableOpacity style={styles.btnIncorrect} onPress={this.inCorrect}>
-//         <Text style={{color: 'white', textAlign: 'center'}}>Incorrect</Text>
-//       </TouchableOpacity>
-//     </View>
-//   )
-// }
+import { FLASHCARDS_STORAGE_KEY, initialFlashCards } from '../utils/_initialData'
 
 export default class QuizView extends Component {
 
@@ -39,6 +22,8 @@ export default class QuizView extends Component {
     this.setState({
       questionsLength: this.props.navigation.state.params.questions.length
     })
+    // Signal that we already studied for today
+    this.props.navigation.state.params.refresh()
   }
 
 
@@ -54,6 +39,7 @@ export default class QuizView extends Component {
   }
 
   next = () => {
+
     if (this.state.index < this.state.questionsLength - 1) {
       this.setState(function(prevState, props) {
         console.log(prevState, props)
@@ -63,38 +49,41 @@ export default class QuizView extends Component {
         }
       })
     } else {
-      alert("You're at the last card already.")
+      Alert.alert(
+        `You're at the last card already.`,
+        ``, [
+          { text: 'OK, I see it now..', onPress: () => console.log('OK Pressed') },
+        ], { cancelable: false }
+      )
     }
 
   }
 
+  previous = () => {
+    const { index, questionsLength } = this.state
+    if (index > 0) {
+      this.setState(function(prevState, props) {
+        console.log(prevState, props)
+        return {
+          index: prevState.index - 1,
+        }
+      })
+    } else {
+      Alert.alert(
+        `You're at the begining card.`,
+        ``, [
+          { text: 'OK, I see it now..', onPress: () => console.log('OK Pressed') },
+        ], { cancelable: false }
+      )
+    }
+  }
+
   correct = (index, title) => {
-    // alert("Correct has been pressed")
-
-    console.log(index, title)
-
     let currentScore = this.state.score
     this.setState((prevState, props) => ({
       scoreBoard: prevState.scoreBoard + 1,
       answered: !prevState.answered
     }))
-
-    // AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-    //   if (results !== null) {
-    //     console.log('Data Found', results)
-    //     currentData = JSON.parse(results)
-    //     // currentData[title]['questions'].push(questions)
-    //     console.log(currentData[title].questions[index].quizzed)
-    //     currentData[title].questions[index].quizzed = true
-    //     AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
-    //     AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-    //       console.log(JSON.parse(results))
-    //     })
-    //   }
-    // })
-
-
-    console.log("Score is now: ", this.state.scoreBoard)
 
   }
 
@@ -103,23 +92,18 @@ export default class QuizView extends Component {
     let currentScore = this.state.score
     if (currentScore >= 0) {
       this.setState((prevState, props) => ({
-        scoreBoard: prevState.scoreBoard--,
+        scoreBoard: prevState.scoreBoard,
         answered: !prevState.answered
       }))
     } else {
-      // Alert.alert('Current score is 0.')
       Alert.alert(
         'Scoreboard is zero',
-        `Scoreboard: ${this.state.scoreBoard}`,
-        [
-          {text: 'OK, I see it now..', onPress: () => console.log('OK Pressed')},
-        ],
-          { cancelable: false }
-                )
+        `Scoreboard: ${this.state.scoreBoard}`, [
+          { text: 'OK, I see it now..', onPress: () => console.log('OK Pressed') },
+        ], { cancelable: false }
+      )
     }
-
   }
-
 
 
   render() {
@@ -132,34 +116,34 @@ export default class QuizView extends Component {
     const { navigation } = this.props
     const title = this.props.navigation.state.params.title
 
-      return (
+    return (
 
-        <View style={styles.container}>
-          <Text>Scoreboard: {scoreBoard} out of {this.state.questionsLength}</Text>
-          <Text>Card: {index + 1} / {this.state.questionsLength}</Text>
-          <Text style={styles.question}>{questions[index].question}</Text>
-          <Text style={styles.answer} onPress={() => navigation.navigate('Answer', questions[index].answer)}>Answer</Text>
+      <View style={styles.container}>
+        <Text>Scoreboard: {scoreBoard} out of {this.state.questionsLength}</Text>
+        <Text>Card: {index + 1} / {this.state.questionsLength}</Text>
+        <Text style={styles.question}>{questions[index].question}</Text>
+        <Text style={styles.answer} onPress={() => navigation.navigate('Answer', questions[index].answer)}>Answer</Text>
 
-          { !answered ? (
-            <View>
-              <TouchableOpacity style={styles.btnCorrect} onPress={this.correct.bind(this, index, title)}>
-                <Text style={{color: 'white', textAlign: 'center'}}>Correct</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.btnIncorrect} onPress={this.incorrect}>
-                <Text style={{color: 'white', textAlign: 'center'}}>Incorrect</Text>
-              </TouchableOpacity>
-            </View>
-          ): (
-            <View>
-              <Text>You've already answered this question.</Text>
-            </View>
-          )}
-          <Button onPress={this.next} title="Next" />
-          <Button onPress={() => navigation.goBack()} title="Back" />
+        { !answered ? (
+          <View>
+            <TouchableOpacity style={styles.btnCorrect} onPress={this.correct.bind(this, index, title)}>
+              <Text style={{color: 'white', textAlign: 'center'}}>Correct</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnIncorrect} onPress={this.incorrect}>
+              <Text style={{color: 'white', textAlign: 'center'}}>Incorrect</Text>
+            </TouchableOpacity>
+          </View>
+        ): (
+          <View style={styles.answered}>
+            <Text>You've already answered this question.</Text>
+          </View>
+        )}
+        <Button onPress={this.next} title="Next" />
+        {/* {this.props.navigation.state.params.refresh()} */}
+        <Button onPress={this.previous} title="Back" />
         </View>
 
-
-      )
+    )
 
 
   } // End of Render
