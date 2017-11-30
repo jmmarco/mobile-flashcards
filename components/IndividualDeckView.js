@@ -5,9 +5,7 @@ import styles from '../utils/styles'
 export default class IndividualDeckView extends Component {
 
   static navigationOptions = ({ navigation }) => {
-    const { deckId, title, questions, reminder } = navigation.state.params
-
-    console.log("ind deck view ", navigation.state.params)
+    const { deckId, title, questions, reminder, refreshDeckListView } = navigation.state.params
 
     return {
       title: title,
@@ -17,11 +15,9 @@ export default class IndividualDeckView extends Component {
 
   }
 
-
-
   render() {
-    console.log(this.props.navigation.state.params)
-    const { deckId, questions, title, reminder } = this.props.navigation.state.params
+
+    const { deckId, questions, title, refresh } = this.props.navigation.state.params
     return (
       <View style={styles.container}>
         <Text style={{fontSize: 50, textAlign: 'center'}} >{title}</Text>
@@ -41,7 +37,7 @@ export default class IndividualDeckView extends Component {
               deckId: deckId,
               title: title,
               questions: questions,
-              reminder: reminder
+              refresh: refresh
             }
           )}>
             <Text style={{color: 'white', textAlign: 'center'}} >Start Quiz</Text>

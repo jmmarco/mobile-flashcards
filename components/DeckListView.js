@@ -1,112 +1,86 @@
 import React, { Component } from 'react'
-import { FLASHCARDS_STORAGE_KEY, initialFlashCards} from '../utils/_initialData'
-import { getDecks } from '../utils/api'
+import { FLASHCARDS_STORAGE_KEY, initialFlashCards } from '../utils/_initialData'
 import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage } from 'react-native'
 import IndividualDeckView from './IndividualDeckView'
 import styles from '../utils/styles'
-
-
 
 export default class DeckListView extends Component {
 
   constructor() {
     super()
     this.state = {
+      date: null,
       firstLaunch: null,
-      decks: []
+      decks: [],
+      reminder: true
     }
   }
 
-
   componentDidMount() {
+
     AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
       AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-        this.setState({
-          decks: JSON.parse(results)
-        })
+        this.setState({ decks: JSON.parse(results) })
       })
-    })
-    .then((response) => {
+    }).then((response) => {
       // There's no response, but if we're here the storage has been succesfully set!
-      this.setState({ firstLaunch: true })
-    })
-    .catch((error) => {
+      // Set the initial state
+      this.setState({ firstLaunch: true, date: new Date().toDateString() })
+    }).catch((error) => {
       // Otherwise output error to the console
       console.log("Oops, something went wrong..", error)
     })
 
   }
 
-
+  refreshDeckListView = () => {
+    this.setState((prevState, props) => ({
+      reminder: !prevState.reminder
+    }))
+  }
 
   render() {
 
-    const { decks } = this.state
-
-    console.log(this.state.decks)
-    //
-    // for (let i in this.state.decks) {
-    //   console.log(this.state.decks[i])
-    // }
-
-    Object.keys(this.state.decks).map((key) => {
-      console.log(typeof this.state.decks[key])
-    })
-
-
-    // decks.map((entry, i, array) => {
-    //   console.log(entry, i, array)
-    // })
-    console.log(decks)
+    const { decks, reminder, date } = this.state
 
     if (this.state.firstLaunch && decks !== undefined) {
-      return (
+      return (<View style={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+          flexGrow: 1
+      }}>
+        {
+          Object.keys(decks).map((key, i) => {
+            return (<TouchableOpacity style={styles.deck} key={i} onPress={() => this.props.navigation.navigate('Deck', {
+                deckId: i,
+                title: decks[key].title,
+                questions: decks[key].questions,
+                refresh: this.refreshDeckListView
+            })}>
+              <Text style={styles.deckTitle}>{decks[key].title}</Text>
+              {
+                decks[key].questions.length > 0
+                  ? (<Text>{decks[key].questions.length} cards</Text>)
+                  : (<Text>0 cards</Text>)
+              }
+            </TouchableOpacity>)
+          })
+        }
 
-        <View>
-          {Object.keys(decks).map((key, i) => {
-            return (
-              <TouchableOpacity style={styles.deck} key={i}
-                onPress={() => this.props.navigation.navigate('Deck',
-                  {
-                    deckId: i,
-                    title: decks[key].title,
-                    questions: decks[key].questions
-                  }
-                )}>
-                <Text style={styles.deckTitle}>{decks[key].title}</Text>
-                {decks[key].questions.length > 0 ? (<Text>{decks[key].questions.length} cards</Text> )
-                : (
-                  <Text>0 cards</Text>
-                )}
-              </TouchableOpacity>
-            )
-          })}
-          {/* {decks.map((entry, i) => {
-            return (
-              <TouchableOpacity key={entry} style={styles.deck}
-            onPress={() => this.props.navigation.navigate('Deck',
-            {
-            deckId: i,
-            title: entry
-            }
-            )}>
-            <Text style={styles.deckTitle}>{entry}</Text>
-            <Text>{decks.length} cards</Text>
-              </TouchableOpacity>
-            )
+        {
 
-          })} */}
+          reminder && date === new Date().toDateString()
+            ? <Text style={{textAlign: 'center'}}>👋 Don't forget to study today!</Text>
+            : <Text style={{textAlign: 'center'}}>👍 You've already studied for today!</Text>
+        }
 
-        </View>
-          )
+      </View>)
 
     } else {
-      return (
-        <View>
-          <Text>{JSON.stringify(this.state.firstLaunch)}</Text>
-          <Text>This is the DeckListView Component ---!</Text>
-        </View>
-      )
+      return (<View>
+        <Text>{JSON.stringify(this.state.firstLaunch)}</Text>
+        <Text>Something went wrong..</Text>
+      </View>)
     }
 
   }

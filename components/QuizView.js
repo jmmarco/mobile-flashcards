@@ -107,9 +107,7 @@ export default class QuizView extends Component {
 
 
   render() {
-    console.log(this.props)
-    console.log(this.state)
-    console.log(this.state.scoreBoard)
+
     const questions = this.props.navigation.state.params.questions
     const questionsLength = this.props.navigation.state.params.questions.length
     const { index, scoreBoard, answered } = this.state

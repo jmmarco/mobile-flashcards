@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, TextInput, AsyncStorage } from 'react-native'
-import { FLASHCARDS_STORAGE_KEY, initialFlashCards} from '../utils/_initialData'
+import { FLASHCARDS_STORAGE_KEY, initialFlashCards } from '../utils/_initialData'
 import styles from '../utils/styles'
 
 export default class NewQuestionView extends Component {
 
   constructor(props) {
-  super(props)
+    super(props)
     this.state = {
       question: 'Question goes here!',
       answer: 'Answer goes here!',
@@ -18,8 +18,6 @@ export default class NewQuestionView extends Component {
 
   static navigationOptions = ({ navigation }) => {
     const { deckId, title, questions } = navigation.state.params
-
-    console.log("ind deck view ", navigation.state.params)
 
     return {
       title: 'Add Card',
@@ -38,9 +36,7 @@ export default class NewQuestionView extends Component {
   addCard = (title, card) => {
     let currentData
     const { question, answer } = this.state
-    console.log(question, answer)
     const questions = { question, answer }
-    console.log(questions)
     title = this.state.deckTitle
 
     let object = {
@@ -52,14 +48,9 @@ export default class NewQuestionView extends Component {
 
     AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
       if (results !== null) {
-        console.log('Data Found', results)
         currentData = JSON.parse(results)
         currentData[title]['questions'].push(questions)
-        console.log(currentData)
         AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
-        AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-          console.log(JSON.parse(results))
-        })
       }
     })
 
