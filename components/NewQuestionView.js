@@ -10,7 +10,8 @@ export default class NewQuestionView extends Component {
     this.state = {
       question: 'Question goes here!',
       answer: 'Answer goes here!',
-      deckTitle: ''
+      deckTitle: '',
+      quizzed: false
     }
   }
 

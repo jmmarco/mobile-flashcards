@@ -75,28 +75,26 @@ export default class QuizView extends Component {
 
     let currentScore = this.state.score
     this.setState((prevState, props) => ({
-      scoreBoard: prevState.score + 1,
+      scoreBoard: prevState.scoreBoard + 1,
       answered: !prevState.answered
     }))
 
-    AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-      if (results !== null) {
-        console.log('Data Found', results)
-        currentData = JSON.parse(results)
-        // currentData[title]['questions'].push(questions)
-        console.log(currentData[title].questions[index].quizzed)
-        currentData[title].questions[index].quizzed = true
-        AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
-        AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-          console.log(JSON.parse(results))
-        })
-      }
-    })
+    // AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
+    //   if (results !== null) {
+    //     console.log('Data Found', results)
+    //     currentData = JSON.parse(results)
+    //     // currentData[title]['questions'].push(questions)
+    //     console.log(currentData[title].questions[index].quizzed)
+    //     currentData[title].questions[index].quizzed = true
+    //     AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
+    //     AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
+    //       console.log(JSON.parse(results))
+    //     })
+    //   }
+    // })
 
 
-
-
-    console.log("Score is now: ", this.state.score)
+    console.log("Score is now: ", this.state.scoreBoard)
 
   }
 
@@ -105,7 +103,7 @@ export default class QuizView extends Component {
     let currentScore = this.state.score
     if (currentScore >= 0) {
       this.setState((prevState, props) => ({
-        scoreBoard: prevState.score--,
+        scoreBoard: prevState.scoreBoard--,
         answered: !prevState.answered
       }))
     } else {
@@ -127,9 +125,10 @@ export default class QuizView extends Component {
   render() {
     console.log(this.props)
     console.log(this.state)
+    console.log(this.state.scoreBoard)
     const questions = this.props.navigation.state.params.questions
     const questionsLength = this.props.navigation.state.params.questions.length
-    const { index, scoreBoard } = this.state
+    const { index, scoreBoard, answered } = this.state
     const { navigation } = this.props
     const title = this.props.navigation.state.params.title
 
@@ -141,7 +140,7 @@ export default class QuizView extends Component {
           <Text style={styles.question}>{questions[index].question}</Text>
           <Text style={styles.answer} onPress={() => navigation.navigate('Answer', questions[index].answer)}>Answer</Text>
 
-          { !questions[index].quizzed ? (
+          { !answered ? (
             <View>
               <TouchableOpacity style={styles.btnCorrect} onPress={this.correct.bind(this, index, title)}>
                 <Text style={{color: 'white', textAlign: 'center'}}>Correct</Text>

@@ -5,13 +5,14 @@ import styles from '../utils/styles'
 export default class IndividualDeckView extends Component {
 
   static navigationOptions = ({ navigation }) => {
-    const { deckId, title, questions } = navigation.state.params
+    const { deckId, title, questions, reminder } = navigation.state.params
 
     console.log("ind deck view ", navigation.state.params)
 
     return {
       title: title,
-      questions: questions
+      questions: questions,
+      reminder: reminder
     }
 
   }
@@ -19,8 +20,8 @@ export default class IndividualDeckView extends Component {
 
 
   render() {
-    console.log(styles)
-    const { deckId, questions, title } = this.props.navigation.state.params
+    console.log(this.props.navigation.state.params)
+    const { deckId, questions, title, reminder } = this.props.navigation.state.params
     return (
       <View style={styles.container}>
         <Text style={{fontSize: 50, textAlign: 'center'}} >{title}</Text>
@@ -39,7 +40,8 @@ export default class IndividualDeckView extends Component {
             {
               deckId: deckId,
               title: title,
-              questions: questions
+              questions: questions,
+              reminder: reminder
             }
           )}>
             <Text style={{color: 'white', textAlign: 'center'}} >Start Quiz</Text>
