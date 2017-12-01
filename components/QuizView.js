@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, ScrollView, Button, AsyncStorage, Alert } from 'react-native'
 import styles from '../utils/styles'
 import { StackNavigator } from 'react-navigation'
-import { FLASHCARDS_STORAGE_KEY, initialFlashCards } from '../utils/_initialData'
+import {
+  FLASHCARDS_STORAGE_KEY,
+  initialFlashCards,
+  clearLocalNotification,
+  setLocalNotification
+} from '../utils/_initialData'
 
 export default class QuizView extends Component {
 
@@ -24,6 +29,8 @@ export default class QuizView extends Component {
     })
     // Signal that we already studied for today
     this.props.navigation.state.params.refresh()
+    clearLocalNotification()
+      .then(setLocalNotification)
   }
 
 

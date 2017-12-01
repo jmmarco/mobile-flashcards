@@ -10,6 +10,7 @@ import NewQuestionView from './components/NewQuestionView'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { mediumSeaGreen, white } from './utils/colors'
 import { Constants } from 'expo'
+import { setLocalNotification } from './utils/_initialData'
 
 
 function FlashCardStatusBar({ backgroundColor, ...props }) {
@@ -121,6 +122,11 @@ const MainNavigator = StackNavigator({
 
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
 
