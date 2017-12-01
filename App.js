@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons'
 import NewDeckView from './components/NewDeckView'
@@ -58,20 +58,6 @@ const Tabs = TabNavigator({
   }
 })
 
-// const QuizNavigator = StackNavigator({
-//
-//   Question: {
-//     screen: Question,
-//     navigationOptions: {
-//       header: null,
-//     },
-//   },
-//   Answer: {
-//     screen: Answer
-//   }
-//
-// })
-
 const MainNavigator = StackNavigator({
 
   Home: {
@@ -119,9 +105,7 @@ const MainNavigator = StackNavigator({
 
 
 
-
-
-export default class App extends React.Component {
+export default class App extends Component {
 
   componentDidMount() {
     setLocalNotification()
@@ -137,24 +121,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-/*
-Noooo
-ReactDOM.render(
- <Provider store={createStore(reducers)}>
-   <App/>
- </Provider>,
- document.getElementById('root')
-)
-
-
-Yessss
-var store = createStore(reducers);
-ReactDOM.render(
- <Provider store={store}>
-   <App/>
- </Provider>,
- document.getElementById('root')
-)
-
-*/

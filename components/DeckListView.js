@@ -1,8 +1,36 @@
 import React, { Component } from 'react'
 import { FLASHCARDS_STORAGE_KEY, initialFlashCards } from '../utils/_initialData'
-import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage, Animated } from 'react-native'
 import IndividualDeckView from './IndividualDeckView'
 import styles from '../utils/styles'
+import { Font } from 'expo'
+
+export class FadeInView extends Component {
+  state = {
+    fade: new Animated.Value(0)
+  }
+
+  componentDidMount() {
+    Animated.timing(
+      this.state.fade, {
+        toValue: 1,
+        duration: 5000,
+      }
+    ).start()
+  }
+
+  render() {
+    let { fade } = this.state
+
+    return (
+      <Animated.View
+        style={{...this.props.style,
+          opacity: fade
+        }}>{this.props.children}
+      </Animated.View>
+    )
+  }
+}
 
 export default class DeckListView extends Component {
 
@@ -12,11 +40,17 @@ export default class DeckListView extends Component {
       date: null,
       firstLaunch: null,
       decks: [],
-      reminder: true
+      reminder: true,
     }
   }
 
   componentDidMount() {
+
+    Font.loadAsync({
+      'Varela Round': require('../assets/fonts/VarelaRound-Regular.ttf'),
+    })
+
+
 
     AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
       AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
@@ -41,14 +75,18 @@ export default class DeckListView extends Component {
 
   render() {
 
-    const { decks, reminder, date } = this.state
 
+    const { decks, reminder, date } = this.state
     if (this.state.firstLaunch && decks !== undefined) {
       return (<View style={{
           flexDirection: 'column',
           justifyContent: 'center',
           flexGrow: 1
       }}>
+
+        <FadeInView>
+          <Text style={styles.mainTitle}>flashcards</Text>
+        </FadeInView>
         {
           Object.keys(decks).map((key, i) => {
             return (<TouchableOpacity style={styles.deck} key={i} onPress={() => this.props.navigation.navigate('Deck', {

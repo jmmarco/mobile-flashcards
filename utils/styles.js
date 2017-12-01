@@ -64,6 +64,15 @@ export default StyleSheet.create({
     backgroundColor: 'limegreen',
     margin: 10,
   },
+  startOver: {
+    // padding: 15,
+    flex: 1,
+    justifyContent: 'center',
+    height: 50,
+    width: 50,
+    backgroundColor: 'lightsalmon',
+    marginTop: 20,
+  },
   question: {
     fontSize: 32,
     textAlign: 'center',
@@ -93,5 +102,38 @@ export default StyleSheet.create({
   answered: {
     padding: 15,
     margin: 10,
+  },
+  scoreBoard: {
+    borderWidth: 2,
+    borderColor: 'orangered',
+    borderRadius: 5,
+    margin: 20,
+    padding: 30,
+    fontSize: 26,
+    color: 'orangered',
+    fontWeight: 'bold',
+  },
+  quizControls: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'flex-end',
+
+  },
+  arrows: {
+    marginTop: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  mainTitle: {
+    textAlign: 'center',
+    fontSize: 60,
+    letterSpacing: 1,
+    fontFamily: 'Varela Round',
+    marginBottom: 20,
+    color: 'mediumseagreen'
+
   }
+
+
 })

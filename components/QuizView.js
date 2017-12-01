@@ -8,6 +8,8 @@ import {
   clearLocalNotification,
   setLocalNotification
 } from '../utils/_initialData'
+import { MaterialCommunityIcons, MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons'
+import { mediumSeaGreen, white } from '../utils/colors'
 
 export default class QuizView extends Component {
 
@@ -112,6 +114,23 @@ export default class QuizView extends Component {
     }
   }
 
+  reset = (index, title) => {
+
+    Alert.alert(
+      `You're about to reset your score and progress..`,
+      ``, [
+        { text: 'Yes, reset please!', onPress: () => {
+          this.setState((prevState, props) => ({
+            scoreBoard: 0,
+            answered: false,
+            index: 0
+          }))
+        } },
+      ], { cancelable: false }
+    )
+
+  }
+
 
   render() {
 
@@ -124,14 +143,14 @@ export default class QuizView extends Component {
     return (
 
       <View style={styles.container}>
-        <Text>Scoreboard: {scoreBoard} out of {this.state.questionsLength}</Text>
+        <Text style={styles.scoreBoard}>Score: {scoreBoard} out of {this.state.questionsLength}</Text>
         <Text>Card: {index + 1} / {this.state.questionsLength}</Text>
         <Text style={styles.question}>{questions[index].question}</Text>
         <Text style={styles.answer} onPress={() => navigation.navigate('Answer', questions[index].answer)}>Answer</Text>
 
         { !answered ? (
           <View>
-            <TouchableOpacity style={styles.btnCorrect} onPress={this.correct.bind(this, index, title)}>
+            <TouchableOpacity style={styles.btnCorrect} onPress={() => this.correct(index, title)}>
               <Text style={{color: 'white', textAlign: 'center'}}>Correct</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnIncorrect} onPress={this.incorrect}>
@@ -143,10 +162,19 @@ export default class QuizView extends Component {
             <Text>You've already answered this question.</Text>
           </View>
         )}
-        <Button onPress={this.next} title="Next" />
-        {/* {this.props.navigation.state.params.refresh()} */}
-        <Button onPress={this.previous} title="Back" />
+        <View style={styles.arrows}>
+          <FontAwesome style={{marginRight: 120}} name='arrow-left' size={35} color={mediumSeaGreen} onPress={this.previous}/>
+          <FontAwesome style={{marginLeft: 120}} name='arrow-right' size={35} color={mediumSeaGreen} onPress={this.next}/>
         </View>
+        <View style={styles.quizControls}>
+          <TouchableOpacity style={styles.startOver} onPress={() => this.reset(index, title)}>
+            <Text style={{color: 'white', textAlign: 'center'}}>Start Over</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.startOver} onPress={() => navigation.goBack()}>
+            <Text style={{color: 'white', textAlign: 'center'}}>Back to Deck</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
 
     )
 
