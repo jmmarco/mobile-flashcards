@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { FLASHCARDS_STORAGE_KEY, initialFlashCards } from '../utils/_initialData'
 import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage, Animated } from 'react-native'
 import IndividualDeckView from './IndividualDeckView'
-import styles from '../utils/styles'
 import { Font } from 'expo'
+import styles from '../utils/styles'
 
 export class FadeInView extends Component {
   state = {
@@ -41,14 +41,15 @@ export default class DeckListView extends Component {
       firstLaunch: null,
       decks: [],
       reminder: true,
+      fontLoaded: false,
     }
   }
 
   componentDidMount() {
 
-    Font.loadAsync({
-      'Varela Round': require('../assets/fonts/VarelaRound-Regular.ttf'),
-    })
+
+
+    this.loadAssetsAync()
 
 
 
@@ -67,6 +68,15 @@ export default class DeckListView extends Component {
 
   }
 
+  async loadAssetsAync() {
+    await Font.loadAsync({
+      'Varela Round': require('../assets/fonts/VarelaRound-Regular.ttf'),
+    })
+    this.setState({
+      fontLoaded: true
+    })
+  }
+
   refreshDeckListView = () => {
     this.setState((prevState, props) => ({
       reminder: !prevState.reminder
@@ -77,16 +87,19 @@ export default class DeckListView extends Component {
 
 
     const { decks, reminder, date } = this.state
+
     if (this.state.firstLaunch && decks !== undefined) {
       return (<View style={{
           flexDirection: 'column',
           justifyContent: 'center',
           flexGrow: 1
       }}>
+        {this.state.fontLoaded &&
+          <FadeInView>
+            <Text style={styles.mainTitle}>flashcards</Text>
+          </FadeInView>
+        }
 
-        <FadeInView>
-          <Text style={styles.mainTitle}>flashcards</Text>
-        </FadeInView>
         {
           Object.keys(decks).map((key, i) => {
             return (<TouchableOpacity style={styles.deck} key={i} onPress={() => this.props.navigation.navigate('Deck', {
