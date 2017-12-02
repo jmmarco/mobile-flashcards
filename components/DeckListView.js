@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { FLASHCARDS_STORAGE_KEY, initialFlashCards } from '../utils/_initialData'
-import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage, Animated } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage, Animated, ScrollView } from 'react-native'
 import IndividualDeckView from './IndividualDeckView'
 import { Font } from 'expo'
 import styles from '../utils/styles'
@@ -84,48 +84,50 @@ export default class DeckListView extends Component {
   }
 
   render() {
-
+    console.log(this.state.decks)
+    console.log(this.props.navigation)
 
     const { decks, reminder, date } = this.state
 
     if (this.state.firstLaunch && decks !== undefined) {
-      return (<View style={{
-          flexDirection: 'column',
-          justifyContent: 'center',
-          flexGrow: 1
-      }}>
-        {this.state.fontLoaded &&
-          <FadeInView>
-            <Text style={styles.mainTitle}>flashcards</Text>
-          </FadeInView>
-        }
+      return (
 
-        {
-          Object.keys(decks).map((key, i) => {
-            return (<TouchableOpacity style={styles.deck} key={i} onPress={() => this.props.navigation.navigate('Deck', {
-                deckId: i,
-                title: decks[key].title,
-                questions: decks[key].questions,
-                refresh: this.refreshDeckListView
-            })}>
-              <Text style={styles.deckTitle}>{decks[key].title}</Text>
-              {
-                decks[key].questions.length > 0
-                  ? (<Text>{decks[key].questions.length} cards</Text>)
-                  : (<Text>0 cards</Text>)
-              }
-            </TouchableOpacity>)
-          })
-        }
+        <ScrollView style={{paddingVertical: 20, paddingBottom: 30, flex: 1}}>
+          <View style={{flex: 1}}>
+            {this.state.fontLoaded &&
+              <FadeInView style={{}}>
+                <Text style={styles.mainTitle}>flashcards</Text>
+              </FadeInView>
+            }
 
-        {
+            {
+              Object.keys(decks).map((key, i) => {
+                return (<TouchableOpacity style={styles.deck} key={i} onPress={() => this.props.navigation.navigate('Deck', {
+                  deckId: i,
+                  title: decks[key].title,
+                  questions: decks[key].questions,
+                  refresh: this.refreshDeckListView
+                })}>
+                  <Text style={styles.deckTitle}>{decks[key].title}</Text>
+                  {
+                    decks[key].questions.length > 0
+                      ? (<Text>{decks[key].questions.length} cards</Text>)
+                      : (<Text>0 cards</Text>)
+                  }
+                </TouchableOpacity>)
+              })
+            }
 
-          reminder && date === new Date().toDateString()
-            ? <Text style={{textAlign: 'center'}}>👋 Don't forget to study today!</Text>
-            : <Text style={{textAlign: 'center'}}>👍 You've already studied for today!</Text>
-        }
+            {
 
-      </View>)
+              reminder && date === new Date().toDateString()
+                ? <Text style={{textAlign: 'center'}}>👋 Don't forget to study today!</Text>
+                : <Text style={{textAlign: 'center'}}>👍 You've already studied for today!</Text>
+            }
+          </View>
+        </ScrollView>
+
+      )
 
     } else {
       return (<View>
