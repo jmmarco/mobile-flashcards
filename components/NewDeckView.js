@@ -14,7 +14,7 @@ export default class NewDeckView extends Component {
   submit = () => {
 
     const { title, questions } = this.state
-
+    let currentData
     // Save to "DB"
     AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
       if (results !== null) {
@@ -24,13 +24,20 @@ export default class NewDeckView extends Component {
         console.log(currentData)
         AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
       }
+
+      this.props.navigation.navigate('Deck', {
+        title: currentData[title].title,
+        questions: currentData[title].questions,
+      })
     })
 
+    console.log(currentData, title, questions)
     // Navigate to the newly created deck
-    this.props.navigation.navigate('Deck', {
-      title: title,
-      questions: questions,
-    })
+    // this.props.navigation.navigate('Deck', {
+    //   title: title,
+    //   questions: questions,
+    // })
+    // this.props.navigation.navigate('Home')
   }
 
   render() {
