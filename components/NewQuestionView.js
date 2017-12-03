@@ -52,6 +52,12 @@ export default class NewQuestionView extends Component {
         currentData[title]['questions'].push(questions)
         AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
       }
+
+      // this.props.navigation.navigate('Deck', {
+      //   title: currentData[title].title,
+      //   questions: currentData[title].questions,
+      // })
+
     })
 
     // Navigate to home
