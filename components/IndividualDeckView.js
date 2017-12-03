@@ -5,12 +5,11 @@ import styles from '../utils/styles'
 export default class IndividualDeckView extends Component {
 
   static navigationOptions = ({ navigation }) => {
-    const { title, questions, reminder, refreshDeckListView } = navigation.state.params
+    const { title, questions } = navigation.state.params
 
     return {
       title: title,
       questions: questions,
-      reminder: reminder
     }
 
   }
@@ -18,7 +17,7 @@ export default class IndividualDeckView extends Component {
   render() {
 
     const { deckId, questions, title, refresh } = this.props.navigation.state.params
-    console.log("Questions from IndividualDeckView are: ", questions)
+
     return (
       <View style={styles.container}>
         <Text style={{fontSize: 50, textAlign: 'center'}} >{title}</Text>
