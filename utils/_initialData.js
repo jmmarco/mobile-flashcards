@@ -31,9 +31,7 @@ export const initialFlashCards = {
   }
 }
 
-
 const FLASHCARDS_NOTIFICATIONS_KEY = '@MyNotifications'
-
 
 export function clearLocalNotification() {
   return AsyncStorage.removeItem(FLASHCARDS_NOTIFICATIONS_KEY)
