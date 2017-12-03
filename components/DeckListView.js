@@ -47,11 +47,7 @@ export default class DeckListView extends Component {
 
   componentDidMount() {
 
-
-
     this.loadAssetsAync()
-
-
 
     AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
       AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
@@ -83,9 +79,9 @@ export default class DeckListView extends Component {
     }))
   }
 
+
+
   render() {
-    console.log(this.state.decks)
-    console.log(this.props.navigation)
 
     const { decks, reminder, date } = this.state
 
