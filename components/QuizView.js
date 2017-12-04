@@ -10,6 +10,7 @@ import {
 } from '../utils/_initialData'
 import { MaterialCommunityIcons, MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons'
 import { mediumSeaGreen, white } from '../utils/colors'
+import { Answer } from './Answer'
 
 export default class QuizView extends Component {
 
@@ -47,6 +48,18 @@ export default class QuizView extends Component {
     }
   }
 
+
+  customAlert = (title, message) => {
+    return (
+      Alert.alert(
+        title,
+        ``, [
+          { text: message, onPress: () => { console.log("Fired customAlert")} },
+        ], { cancelable: false }
+      )
+    )
+  }
+
   next = () => {
 
     if (this.state.index < this.state.questionsLength - 1) {
@@ -58,12 +71,7 @@ export default class QuizView extends Component {
         }
       })
     } else {
-      Alert.alert(
-        `You're at the last card already.`,
-        ``, [
-          { text: 'OK, I see it now..', onPress: () => console.log('OK Pressed') },
-        ], { cancelable: false }
-      )
+      this.customAlert(`You're aready at the end!`, `Ok, I see it now..`)
     }
 
   }
@@ -78,12 +86,7 @@ export default class QuizView extends Component {
         }
       })
     } else {
-      Alert.alert(
-        `You're at the begining card.`,
-        ``, [
-          { text: 'OK, I see it now..', onPress: () => console.log('OK Pressed') },
-        ], { cancelable: false }
-      )
+      this.customAlert(`You're aready at the begining!`, `Ok, I see it now..`)
     }
   }
 
@@ -105,12 +108,7 @@ export default class QuizView extends Component {
         answered: !prevState.answered
       }))
     } else {
-      Alert.alert(
-        'Scoreboard is zero',
-        `Scoreboard: ${this.state.scoreBoard}`, [
-          { text: 'OK, I see it now..', onPress: () => console.log('OK Pressed') },
-        ], { cancelable: false }
-      )
+      customAlert(`Scoreboard is zero`, `OK, I see it now..`)
     }
   }
 
