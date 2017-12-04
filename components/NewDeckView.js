@@ -30,14 +30,6 @@ export default class NewDeckView extends Component {
         questions: currentData[title].questions,
       })
     })
-
-    console.log(currentData, title, questions)
-    // Navigate to the newly created deck
-    // this.props.navigation.navigate('Deck', {
-    //   title: title,
-    //   questions: questions,
-    // })
-    // this.props.navigation.navigate('Home')
   }
 
   render() {
