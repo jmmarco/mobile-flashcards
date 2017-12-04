@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { FLASHCARDS_STORAGE_KEY, initialFlashCards } from '../utils/_initialData'
+import { timestampData } from '../utils/helpers'
 import { View, TouchableOpacity, Text, StyleSheet, AsyncStorage, Animated, ScrollView } from 'react-native'
 import IndividualDeckView from './IndividualDeckView'
 import { Font } from 'expo'
@@ -20,7 +21,7 @@ export class FadeInView extends Component {
   }
 
   render() {
-    let { fade } = this.state
+    const { fade } = this.state
 
     return (
       <Animated.View
@@ -49,18 +50,22 @@ export default class DeckListView extends Component {
 
     this.loadAssetsAync()
 
-    AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
-      AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
-        this.setState({ decks: JSON.parse(results) })
+    const value = AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+
+    if (value !== null) {
+      AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialFlashCards), () => {
+        AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY, (err, results) => {
+          this.setState({ decks: JSON.parse(results) })
+        })
+      }).then((response) => {
+        // There's no response, but if we're here the storage has been succesfully set!
+        // Set the initial state
+        this.setState({ firstLaunch: true, date: timestampData() })
+      }).catch((error) => {
+        // Otherwise output error to the console
+        console.log("Oops, something went wrong..", error)
       })
-    }).then((response) => {
-      // There's no response, but if we're here the storage has been succesfully set!
-      // Set the initial state
-      this.setState({ firstLaunch: true, date: new Date().toDateString() })
-    }).catch((error) => {
-      // Otherwise output error to the console
-      console.log("Oops, something went wrong..", error)
-    })
+    }
 
   }
 
@@ -116,7 +121,7 @@ export default class DeckListView extends Component {
 
             {
 
-              reminder && date === new Date().toDateString()
+              reminder && date === timestampData()
                 ? <Text style={{textAlign: 'center'}}>👋 Don't forget to study today!</Text>
                 : <Text style={{textAlign: 'center'}}>👍 You've already studied for today!</Text>
             }
