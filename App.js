@@ -61,7 +61,7 @@ const Tabs = TabNavigator({
 const MainNavigator = StackNavigator({
 
   Home: {
-    screen: Tabs
+    screen: Tabs,
   },
   Deck: {
     screen: IndividualDeckView,
