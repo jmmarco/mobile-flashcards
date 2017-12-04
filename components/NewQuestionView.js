@@ -5,8 +5,8 @@ import styles from '../utils/styles'
 
 export default class NewQuestionView extends Component {
 
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       question: 'Question goes here!',
       answer: 'Answer goes here!',
@@ -52,11 +52,6 @@ export default class NewQuestionView extends Component {
         currentData[title]['questions'].push(questions)
         AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(currentData))
       }
-
-      // this.props.navigation.navigate('Deck', {
-      //   title: currentData[title].title,
-      //   questions: currentData[title].questions,
-      // })
 
     })
 
